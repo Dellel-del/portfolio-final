@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio – Dellel Safer</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --pink-50:#fff0f5;
+    --pink-100:#ffd6e7;
+    --pink-200:#ffadd2;
+    --pink-400:#f472b6;
+    --pink-600:#db2777;
+    --white:#ffffff;
+    --gray-50:#fafafa;
+    --gray-200:#e5e7eb;
+    --gray-500:#6b7280;
+    --gray-800:#1f2937;
+  }
+  body{font-family:'Segoe UI',sans-serif;background:#fff0f5;color:var(--gray-800);min-height:100vh;}
+
+  /* NAV */
+  nav{background:var(--white);border-bottom:1.5px solid var(--pink-100);position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;}
+  .nav-logo{font-size:1.1rem;font-weight:600;color:var(--pink-600);letter-spacing:.5px;}
+  .nav-links{display:flex;gap:1.5rem;}
+  .nav-links a{text-decoration:none;color:var(--gray-500);font-size:.9rem;transition:color .2s;}
+  .nav-links a:hover{color:var(--pink-600);}
+
+  /* HERO */
+  .hero{background:linear-gradient(135deg,#fff0f5 60%,#ffd6e7 100%);padding:4rem 2rem 3rem;text-align:center;border-bottom:1px solid var(--pink-100);}
+  .hero h1{font-size:2.2rem;font-weight:700;color:var(--pink-600);margin-bottom:.5rem;}
+  .hero p.subtitle{font-size:1rem;color:var(--gray-500);max-width:560px;margin:0 auto 1.5rem;line-height:1.6;}
+  .badge-row{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;}
+  .badge{background:var(--pink-100);color:var(--pink-600);font-size:.8rem;padding:.3rem .8rem;border-radius:999px;font-weight:500;}
+
+  /* SECTIONS */
+  section{max-width:900px;margin:0 auto;padding:3rem 1.5rem;}
+  .section-title{font-size:1.3rem;font-weight:600;color:var(--pink-600);margin-bottom:1.5rem;padding-bottom:.5rem;border-bottom:2px solid var(--pink-100);}
+
+  /* ABOUT */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+  @media(max-width:600px){.about-grid{grid-template-columns:1fr;}}
+  .info-card{background:var(--white);border:1px solid var(--pink-100);border-radius:12px;padding:1.2rem 1.4rem;}
+  .info-card h3{font-size:.85rem;color:var(--pink-400);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.8rem;font-weight:600;}
+  .info-card ul{list-style:none;display:flex;flex-direction:column;gap:.4rem;}
+  .info-card li{font-size:.9rem;color:var(--gray-800);display:flex;align-items:center;gap:.5rem;}
+  .info-card li::before{content:"▸";color:var(--pink-400);font-size:.75rem;}
+
+  /* COMPETENCES */
+  .comp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;}
+  .comp-card{background:var(--white);border:1px solid var(--pink-100);border-radius:12px;padding:1rem 1.2rem;}
+  .comp-card h3{font-size:.82rem;color:var(--pink-600);font-weight:600;margin-bottom:.6rem;text-transform:uppercase;letter-spacing:.4px;}
+  .comp-tag{display:inline-block;background:var(--pink-50);color:var(--pink-600);font-size:.78rem;padding:.2rem .6rem;border-radius:6px;margin:.2rem .15rem;border:1px solid var(--pink-100);}
+
+  /* PROJETS */
+  .proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.2rem;}
+  .proj-card{background:var(--white);border:1px solid var(--pink-100);border-radius:12px;padding:1.2rem 1.4rem;display:flex;flex-direction:column;gap:.6rem;}
+  .proj-title{font-size:1rem;font-weight:600;color:var(--gray-800);}
+  .proj-desc{font-size:.88rem;color:var(--gray-500);line-height:1.5;}
+  .proj-tags{display:flex;flex-wrap:wrap;gap:.3rem;}
+  .proj-tag{background:var(--pink-50);color:var(--pink-600);font-size:.75rem;padding:.2rem .55rem;border-radius:6px;border:1px solid var(--pink-100);}
+
+  /* HACKATHON UPLOAD */
+  .upload-section{background:var(--white);border:1px solid var(--pink-100);border-radius:16px;padding:2rem;}
+  .upload-section h2{font-size:1rem;font-weight:600;color:var(--gray-800);margin-bottom:.4rem;}
+  .upload-section p{font-size:.88rem;color:var(--gray-500);margin-bottom:1.2rem;line-height:1.5;}
+  .upload-box{border:2px dashed var(--pink-200);border-radius:12px;padding:2rem;text-align:center;cursor:pointer;transition:background .2s;position:relative;}
+  .upload-box:hover{background:var(--pink-50);}
+  .upload-box input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+  .upload-icon{font-size:2rem;color:var(--pink-400);margin-bottom:.5rem;}
+  .upload-label{font-size:.88rem;color:var(--gray-500);}
+  .upload-label strong{color:var(--pink-600);}
+  .file-list{margin-top:1rem;display:flex;flex-direction:column;gap:.5rem;}
+  .file-item{background:var(--pink-50);border:1px solid var(--pink-100);border-radius:8px;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;font-size:.85rem;}
+  .file-item span{color:var(--gray-800);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:70%;}
+  .file-remove{background:none;border:none;color:var(--pink-400);cursor:pointer;font-size:1rem;padding:0 .3rem;}
+  .file-remove:hover{color:var(--pink-600);}
+  .comp-badges{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.8rem;}
+  .comp-badge{background:var(--pink-100);color:var(--pink-600);font-size:.75rem;padding:.25rem .65rem;border-radius:999px;font-weight:500;}
+
+  .two-uploads{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+  @media(max-width:650px){.two-uploads{grid-template-columns:1fr;}}
+
+  /* XP */
+  .xp-list{display:flex;flex-direction:column;gap:1rem;}
+  .xp-item{background:var(--white);border:1px solid var(--pink-100);border-radius:12px;padding:1.1rem 1.4rem;}
+  .xp-header{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:.3rem;}
+  .xp-title{font-size:.95rem;font-weight:600;color:var(--gray-800);}
+  .xp-date{font-size:.8rem;color:var(--pink-400);white-space:nowrap;}
+  .xp-company{font-size:.82rem;color:var(--pink-600);margin-bottom:.3rem;font-style:italic;}
+  .xp-desc{font-size:.85rem;color:var(--gray-500);line-height:1.5;}
+
+  /* CONTACT */
+  .contact-bar{background:var(--white);border-top:2px solid var(--pink-100);padding:2rem;text-align:center;}
+  .contact-bar h2{font-size:1.2rem;font-weight:600;color:var(--pink-600);margin-bottom:1rem;}
+  .contact-items{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;}
+  .contact-item{display:flex;align-items:center;gap:.5rem;background:var(--pink-50);border:1px solid var(--pink-100);border-radius:999px;padding:.5rem 1.2rem;font-size:.88rem;color:var(--gray-800);}
+  .contact-item a{color:var(--pink-600);text-decoration:none;}
+
+  /* FOOTER */
+  footer{text-align:center;padding:1.2rem;font-size:.78rem;color:var(--gray-500);background:var(--white);border-top:1px solid var(--pink-100);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">✦ Dellel Safer</div>
+  <div class="nav-links">
+    <a href="#about">Profil</a>
+    <a href="#competences">Compétences</a>
+    <a href="#projets">Projets</a>
+    <a href="#documents">Documents</a>
+    <a href="#experience">Expériences</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Dellel Safer</h1>
+  <p class="subtitle">Étudiante en 1ère année de BTS SIO option SISR à l'EFREI — à la recherche d'un stage de 4 à 6 semaines à partir du 11 mai pour développer mes compétences en systèmes, réseaux et cybersécurité.</p>
+  <div class="badge-row">
+    <span class="badge">BTS SIO – SISR</span>
+    <span class="badge">EFREI Paris</span>
+    <span class="badge">Stage disponible dès le 11 mai</span>
+    <span class="badge">Réseaux & Cybersécurité</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-title">Profil</div>
+  <div class="about-grid">
+    <div class="info-card">
+      <h3>Formation</h3>
+      <ul>
+        <li>BTS SIO – SISR @ EFREI (2025–27)</li>
+        <li>Cybersécurité & sécurité web</li>
+        <li>Réseaux : LAN, Windows Server, Linux, AD</li>
+        <li>Virtualisation : VirtualBox, VMware</li>
+        <li>Outils : GLPI, Trello, GitHub, Figma</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h3>Qualités</h3>
+      <ul>
+        <li>Résolution de problèmes</li>
+        <li>Autonomie &amp; travail en équipe</li>
+        <li>Volonté d'apprendre</li>
+        <li>Capacité d'analyse</li>
+        <li>Proactive &amp; persévérante</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h3>Langages & Outils</h3>
+      <ul>
+        <li>HTML / CSS / PHP / JavaScript</li>
+        <li>MySQL &amp; SQL</li>
+        <li>Git &amp; GitHub</li>
+        <li>Pack Office &amp; Google Analytics</li>
+        <li>Systèmes : Windows &amp; Linux</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h3>Centres d'intérêt</h3>
+      <ul>
+        <li>Cinéma</li>
+        <li>Tennis</li>
+        <li>Lecture</li>
+        <li>Voyages</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- COMPETENCES -->
+<section id="competences">
+  <div class="section-title">Compétences</div>
+  <div class="comp-grid">
+    <div class="comp-card">
+      <h3>Réseaux & Systèmes</h3>
+      <span class="comp-tag">LAN</span><span class="comp-tag">Windows Server</span><span class="comp-tag">Linux</span><span class="comp-tag">Active Directory</span><span class="comp-tag">VirtualBox</span><span class="comp-tag">VMware</span>
+    </div>
+    <div class="comp-card">
+      <h3>Cybersécurité</h3>
+      <span class="comp-tag">XSS / CSRF</span><span class="comp-tag">SQL Injection</span><span class="comp-tag">HTTP/HTTPS</span><span class="comp-tag">MITM</span><span class="comp-tag">Sécurité web</span>
+    </div>
+    <div class="comp-card">
+      <h3>Développement Web</h3>
+      <span class="comp-tag">HTML</span><span class="comp-tag">CSS</span><span class="comp-tag">PHP</span><span class="comp-tag">JavaScript</span><span class="comp-tag">MySQL</span>
+    </div>
+    <div class="comp-card">
+      <h3>Outils & Gestion</h3>
+      <span class="comp-tag">Git / GitHub</span><span class="comp-tag">GLPI</span><span class="comp-tag">Trello</span><span class="comp-tag">Figma</span><span class="comp-tag">Google Analytics</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROJETS -->
+<section id="projets">
+  <div class="section-title">Projets réalisés</div>
+  <div class="proj-grid">
+    <div class="proj-card">
+      <div class="proj-title">Application web sécurisée</div>
+      <div class="proj-desc">Développement d'une application web sécurisée en PHP/MySQL avec gestion des vulnérabilités web.</div>
+      <div class="proj-tags"><span class="proj-tag">PHP</span><span class="proj-tag">MySQL</span><span class="proj-tag">Sécurité</span></div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-title">Site web dynamique Linux</div>
+      <div class="proj-desc">Création et déploiement d'un site web dynamique sur serveur Linux.</div>
+      <div class="proj-tags"><span class="proj-tag">Linux</span><span class="proj-tag">Apache</span><span class="proj-tag">Web</span></div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-title">Analyse MITM / HTTP/HTTPS</div>
+      <div class="proj-desc">Analyse d'une attaque Man-In-The-Middle et sensibilisation aux failles HTTP/HTTPS.</div>
+      <div class="proj-tags"><span class="proj-tag">Cybersécurité</span><span class="proj-tag">MITM</span><span class="proj-tag">HTTPS</span></div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-title">Hackathon – E-commerce</div>
+      <div class="proj-desc">Chef de projet dans un hackathon e-commerce : collecte et distribution des tâches entre les membres de l'équipe.</div>
+      <div class="proj-tags"><span class="proj-tag">Chef de projet</span><span class="proj-tag">Équipe</span><span class="proj-tag">E-commerce</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- DOCUMENTS -->
+<div class="two-uploads">
+
+  <!-- Tableau de synthèse -->
+  <div class="upload-section">
+    <h2>📋 Tableau de synthèse</h2>
+    <p>Compétences mises en œuvre en <strong>Support et mise à disposition de services informatiques</strong>.</p>
+    <a href="fichiers/tableau-synthese.pdf" target="_blank" style="display:inline-block;margin-top:1rem;background:#db2777;color:#fff;padding:.7rem 1.4rem;border-radius:999px;text-decoration:none;font-size:.9rem;">📄 Ouvrir le document</a>
+  </div>
+
+  <!-- Dossier Hackathon -->
+  <div class="upload-section">
+    <h2>💻 Dossier Hackathon</h2>
+    <p>Documentation des compétences développées durant le projet Hackathon.</p>
+    <div style="display:flex;flex-direction:column;gap:.6rem;margin-top:1rem;">
+      <a href="Fichiers/Documentation/Documentation C1.pdf" target="_blank" style="background:#fff0f5;border:1px solid #ffd6e7;color:#db2777;padding:.6rem 1.2rem;border-radius:999px;text-decoration:none;font-size:.88rem;">📄 C1 – Recenser et identifier les ressources numériques</a>
+      <a href="Fichiers/Documentation/Documentation C7.pdf" target="_blank" style="background:#fff0f5;border:1px solid #ffd6e7;color:#db2777;padding:.6rem 1.2rem;border-radius:999px;text-decoration:none;font-size:.88rem;">📄 C7 – Collecter, suivre et orienter les demandes</a>
+      <a href="Fichiers/Documentation/Documentation C11.pdf" target="_blank" style="background:#fff0f5;border:1px solid #ffd6e7;color:#db2777;padding:.6rem 1.2rem;border-radius:999px;text-decoration:none;font-size:.88rem;">📄 C11 – Mettre en place et exploiter des mesures</a>
+      <a href="Fichiers/Documentation/Documentation C14.pdf" target="_blank" style="background:#fff0f5;border:1px solid #ffd6e7;color:#db2777;padding:.6rem 1.2rem;border-radius:999px;text-decoration:none;font-size:.88rem;">📄 C14 – Planifier les activités</a>
+      <a href="Fichiers/Documentation/Documentation C17.pdf" target="_blank" style="background:#fff0f5;border:1px solid #ffd6e7;color:#db2777;padding:.6rem 1.2rem;border-radius:999px;text-decoration:none;font-size:.88rem;">📄 C17 – Déployer un service</a>
+    </div>
+  </div>
+
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-title">Expériences professionnelles</div>
+  <div class="xp-list">
+    <div class="xp-item">
+      <div class="xp-header">
+        <div class="xp-title">Vendeuse en Boulangerie/Pâtisserie</div>
+        <div class="xp-date">Oct. 2025 – aujourd'hui</div>
+      </div>
+      <div class="xp-company">La Parisienne, Paris</div>
+      <div class="xp-desc">Accueil et conseil clients · Encaissement · Mise en rayon · Relation client</div>
+    </div>
+    <div class="xp-item">
+      <div class="xp-header">
+        <div class="xp-title">Assistante Administrative</div>
+        <div class="xp-date">Oct. – Nov. 2024</div>
+      </div>
+      <div class="xp-company">IML Group, Paris</div>
+      <div class="xp-desc">Accueil · Gestion et classement de documents · Suivi administratif</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-bar" id="contact">
+  <h2>Me contacter</h2>
+  <div class="contact-items">
+    <div class="contact-item">📱 07 83 24 71 11</div>
+    <div class="contact-item">✉️ <a href="mailto:dellelsafer30@mail.com">dellelsafer30@mail.com</a></div>
+    
+
+  </div>
+</div>
+
+<footer>© 2025 Dellel Safer · Portfolio BTS SIO – SISR</footer>
+
+<script>
+const files1=[],files2=[];
+function ev(e){e.preventDefault();}
+function drop(e,listId,boxId){
+  e.preventDefault();
+  addFiles(e.dataTransfer.files,listId);
+}
+function addFiles(fls,listId){
+  const store=listId==='list1'?files1:files2;
+  Array.from(fls).forEach(f=>{
+    if(!store.find(x=>x.name===f.name)){store.push(f);}
+  });
+  render(listId,store);
+}
+function render(listId,store){
+  const el=document.getElementById(listId);
+  el.innerHTML='';
+  store.forEach((f,i)=>{
+    const div=document.createElement('div');
+    div.className='file-item';
+    const icon=f.name.endsWith('.pdf')?'📄':f.name.endsWith('.zip')?'🗜️':f.name.match(/\.(png|jpg|jpeg)$/)?'🖼️':'📝';
+    div.innerHTML=`<span>${icon} ${f.name}</span><button class="file-remove" onclick="removeFile('${listId}',${i})">✕</button>`;
+    el.appendChild(div);
+  });
+}
+function removeFile(listId,i){
+  const store=listId==='list1'?files1:files2;
+  store.splice(i,1);
+  render(listId,store);
+}
+</script>
+</body>
+</html>
